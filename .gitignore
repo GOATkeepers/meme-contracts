@@ -1,0 +1,6 @@
+artifacts
+cache
+node_modules
+mnemonic.txt
+.env
+.vscode
