@@ -1,5 +1,5 @@
 {
-  "name": "hardhat-project",
+  "name": "Meme VIP NFT",
   "dependencies": {
     "@openzeppelin/contracts-upgradeable": "^4.4.2"
   }
