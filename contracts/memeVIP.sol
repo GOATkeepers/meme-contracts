@@ -78,7 +78,7 @@ contract MemeVIP is Initializable, ERC721Upgradeable, ERC721EnumerableUpgradeabl
     }
 
     function _baseURI() internal pure override returns (string memory) {
-        return "goatkeepers.sh/meme/api/v1";
+        return "https://api.goatkeepers.sh/v1/meme-vip/metadata/";
     }
 
     function pause() public onlyOwner {

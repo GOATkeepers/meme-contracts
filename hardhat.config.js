@@ -58,8 +58,8 @@
        */
      },
      rinkeby: {
-       url: "https://rinkeby.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad", // <---- YOUR INFURA ID! (or it won't work)
-       accounts: {
+       url: "https://rinkeby.infura.io/v3/e8ccef170d79486a9281f9411217e738", // <---- YOUR INFURA ID! (or it won't work)
+       accounts: process.env.TEST_ACCOUNT_SECRET_KEY ? [process.env.TEST_ACCOUNT_SECRET_KEY] : {
          mnemonic: mnemonic(),
        },
      },
@@ -70,7 +70,7 @@
        },
      },
      mainnet: {
-       url: "https://mainnet.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad", // <---- YOUR INFURA ID! (or it won't work)
+       url: "https://mainnet.infura.io/v3/e8ccef170d79486a9281f9411217e738", // <---- YOUR INFURA ID! (or it won't work)
        accounts: {
          mnemonic: mnemonic(),
        },
