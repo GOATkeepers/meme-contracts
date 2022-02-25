@@ -56,6 +56,7 @@
          notice no mnemonic here? it will just use account 0 of the hardhat node to deploy
          (you can put in a mnemonic here to set the deployer locally)
        */
+       accounts: process.env.TEST_ACCOUNT_SECRET_KEY ? [process.env.TEST_ACCOUNT_SECRET_KEY] : []
      },
      rinkeby: {
        url: "https://rinkeby.infura.io/v3/e8ccef170d79486a9281f9411217e738", // <---- YOUR INFURA ID! (or it won't work)
@@ -82,8 +83,8 @@
        },
      },
      goerli: {
-       url: "https://goerli.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad", // <---- YOUR INFURA ID! (or it won't work)
-       accounts: {
+       url: "https://goerli.infura.io/v3/e8ccef170d79486a9281f9411217e738", // <---- YOUR INFURA ID! (or it won't work)
+       accounts: process.env.TEST_ACCOUNT_SECRET_KEY ? [process.env.TEST_ACCOUNT_SECRET_KEY] : {
          mnemonic: mnemonic(),
        },
      },
