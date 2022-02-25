@@ -10,6 +10,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721Burnab
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/cryptography/MerkleProofUpgradeable.sol";
 
 contract OwnableDelegateProxy {}
 
@@ -22,6 +23,10 @@ contract MemeVIP is Initializable, ERC721Upgradeable, ERC721EnumerableUpgradeabl
 
     address proxyRegistryAddress;
     uint256 basePrice;
+    uint256 _totalSupply;
+    bytes32 merkleRoot;
+    bool _wlMint;
+    bool _publicMint;
 
     CountersUpgradeable.Counter private _tokenIdCounter;
 
@@ -38,21 +43,50 @@ contract MemeVIP is Initializable, ERC721Upgradeable, ERC721EnumerableUpgradeabl
         __UUPSUpgradeable_init();
         address _proxyRegistryAddress = 0xa5409ec958C83C3f309868babACA7c86DCB077c1;
         proxyRegistryAddress = _proxyRegistryAddress;
-        basePrice = 30000000000000000;
-
+        basePrice = 80000000000000000;
+        _totalSupply = 3555;
         _tokenIdCounter.increment();
+        _wlMint = false;
+        _publicMint = false;
+    }
+
+    function wlMint(uint256 count, bytes32[] calldata proof) public payable {
+        require(_wlMint == true, 'MINTING NOT YET STARTED');
+        require(count <= 10, 'MAX 10 PER TRANSACTION');
+        require(msg.value >= basePrice * count, 'INCREASE PAYMENT TO MINT');
+        bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
+        require(MerkleProofUpgradeable.verify(proof, merkleRoot, leaf),'NOT ON WHITELIST');
+        for(uint256 i=0; i< count; i++){
+            uint256 tokenId = _tokenIdCounter.current();
+            require(tokenId <= _totalSupply);
+            _tokenIdCounter.increment();
+            _safeMint(msg.sender, tokenId);
+        }
     }
 
     function batchMint(uint256 count) public payable {
+        require(_publicMint == true, 'PUBLIC MINTING NOT YET STARTED');
+        require(count <= 10, 'MAX 10 PER TRANSACTION');
         require(msg.value >= basePrice * count, 'INCREASE PAYMENT TO MINT');
         for(uint256 i=0; i< count; i++){
             uint256 tokenId = _tokenIdCounter.current();
-            // TODO: check totalSupply on enumerable
-            // require(tokenId <= totalSupply);
+            require(tokenId <= _totalSupply);
             _tokenIdCounter.increment();
             _safeMint(msg.sender, tokenId);
         }
     }  
+
+    function setMerkleRoot(bytes32 _merkleRoot) public onlyOwner {
+        merkleRoot = _merkleRoot;
+    }
+
+    function commenceWlMint() public onlyOwner {
+        _wlMint = true;
+    }
+    
+    function commencePublicMint() public onlyOwner {
+        _publicMint = true;
+    }
 
     /**
      * Override isApprovedForAll to whitelist user's OpenSea proxy accounts to enable gas-less listings.
