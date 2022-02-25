@@ -123,13 +123,6 @@ contract MemeVIP is Initializable, ERC721Upgradeable, ERC721EnumerableUpgradeabl
         _unpause();
     }
 
-    function safeMint(address to, string memory uri) public onlyOwner {
-        uint256 tokenId = _tokenIdCounter.current();
-        _tokenIdCounter.increment();
-        _safeMint(to, tokenId);
-        _setTokenURI(tokenId, uri);
-    }
-
     function _beforeTokenTransfer(address from, address to, uint256 tokenId)
         internal
         whenNotPaused
