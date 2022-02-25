@@ -112,7 +112,7 @@ contract MemeVIP is Initializable, ERC721Upgradeable, ERC721EnumerableUpgradeabl
     }
 
     function _baseURI() internal pure override returns (string memory) {
-        return "goatkeepers.sh/meme/api/v1";
+        return "https://api.goatkeepers.sh/v1/meme/metadata/";
     }
 
     function pause() public onlyOwner {
@@ -162,5 +162,10 @@ contract MemeVIP is Initializable, ERC721Upgradeable, ERC721EnumerableUpgradeabl
         returns (bool)
     {
         return super.supportsInterface(interfaceId);
+    }
+
+    function withdrawAll() public {
+        uint256 amount = address(this).balance;
+        require(payable(owner()).send(amount));
     }
 }
