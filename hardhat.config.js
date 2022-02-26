@@ -70,10 +70,7 @@
        },
      },
      mainnet: {
-       url: "https://mainnet.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad", // <---- YOUR INFURA ID! (or it won't work)
-       accounts: {
-         mnemonic: mnemonic(),
-       },
+       url: "https://mainnet.infura.io/v3/5e0bb871bc0f471a8e8b36636702265e", // <---- YOUR INFURA ID! (or it won't work)
      },
      ropsten: {
        url: "https://ropsten.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad", // <---- YOUR INFURA ID! (or it won't work)
@@ -82,10 +79,7 @@
        },
      },
      goerli: {
-       url: "https://goerli.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad", // <---- YOUR INFURA ID! (or it won't work)
-       accounts: {
-         mnemonic: mnemonic(),
-       },
+       url: "https://goerli.infura.io/v3/5e0bb871bc0f471a8e8b36636702265e", // <---- YOUR INFURA ID! (or it won't work)
      },
      xdai: {
        url: "https://rpc.xdaichain.com/",
